@@ -4,6 +4,13 @@ A Human Like typing simulator using a .exe file. CLI APPLICATION. PURELY FOR EDU
 
 This project is a model that uses pyautogui to simulate human-like typing into documents. This application is developed purely with the intent to understand and connect modern day Machine Learning technologies with human-like input simulation to push the boundaries of computing. This application was not at all developed with the intention to circumnavigate applications used to prevent students from cheating. 
 
+REQUIREMENTS: 
+
+PYTHON: pyautogui module (pip install pyautogui)
+JAVA: incomplete
+C: incomplete
+
+
 
 USAGE: 
 
