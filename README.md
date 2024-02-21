@@ -35,3 +35,11 @@ ASSUME ALL TRADITIONAL CONTRIBUTION PRACTICES ON GITHUB / OTHER OPENSOURCE PROJE
 FORK AND PULL REQUEST 
 
 DO NOT CHANGE MAIN, ONLY CHANGE DEVELOP
+
+
+
+
+
+INTENDED RESULTS: 
+
+Through a deeper understanding of the difference between automated and human keystrokes, hopefully it is possible in the future to flag automated keystrokes on web pages to stop bruteforcers from forcing their way into websites through their superior computing power. 
