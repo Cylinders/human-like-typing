@@ -1,4 +1,4 @@
-# human-like-typing
+# human-like-typing (PROJECT NOT COMPLETE) 
 A Human Like typing simulator using a .exe file. CLI APPLICATION. PURELY FOR EDUCATIONAL USAGE. 
 
 
