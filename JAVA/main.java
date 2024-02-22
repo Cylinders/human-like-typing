@@ -6,6 +6,8 @@ import java.sql.Time;
 import java.awt.AWTException;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import JAVA.autogui;
+import java.lang.Thread;
 
 // RUTHVIK VENKATESAN AND VIHAS VEGGALAM 2024; LIFELIKE HUMAN TYPING
 
@@ -40,34 +42,13 @@ public class main {
      
     public static void main(String[] args) {
 
+        Thread.sleep(5000);
+        autogui x = new autogui(); 
+        x.typewrite('h');
+        x.typewrite('e');
+        x.typewrite('l');
+        x.typewrite('o'); 
 
-        Scanner input = new Scanner(System.in); 
-
-
-        System.out.println("CLI Application - Human typing simulator. "); 
-
-        System.out.println("Enter the number 1 if testing the application. Else, hit enter"); 
-
-        boolean testRun = false; 
-
-        try {
-
-            if(input.nextInt() == 1) {
-
-                testRun = true;
-                System.out.println("Initiating a testrun."); 
-
-            }        
-
-        }
-        
-        catch(Exception e){
-
-            System.out.println("Starting the application."); 
-
-        }
-
-        
 
         
 
