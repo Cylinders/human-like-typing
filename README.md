@@ -6,7 +6,7 @@ This project is a model that uses pyautogui to simulate human-like typing into d
 
 REQUIREMENTS: 
 
-PYTHON: pyautogui module (pip install pyautogui)
+PYTHON: pyautogui module (pip install pyautogui) (also, obviously, the python interpreter; cannot run natively) 
 JAVA: incomplete
 C: incomplete
 

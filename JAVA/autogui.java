@@ -29,23 +29,13 @@ public class autogui {
 
     static Robot gui; 
 
-    public autogui() throws AWTException { 
-        gui = new Robot(); 
-    }
+    private boolean keyState{false}; 
 
-    public boolean typewrite(char x){ 
+    public autogui() {
 
-        try {
-
-            
-
-            return true; 
-        }
-
-        catch(Exception e) {
-            return false; 
-        }
-
+        keyState = {false, false, false};
 
     }
+
+
 }
