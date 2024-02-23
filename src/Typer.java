@@ -9,10 +9,7 @@ public class Typer {
 
     public static void main(String[] args) throws IOException,
             AWTException, InterruptedException {
-        // String command = "notepad.exe";
-        // Runtime run = Runtime.getRuntime();
-        // run.exec(command);
-        keyInformation = new KeyInformation();
+    
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -22,15 +19,26 @@ public class Typer {
 
         // Create an instance of Robot class
         robot = new Robot();
-        String sentence = "Is this the dagger?";
-        type_sentence(sentence, 400, 92);
+        String sentence = "As an AI language model, I don't have personal opinions or thoughts";
+        type_sentence(sentence, 120, 92);
+    }
+    public Typer() {
+        try{
+        robot = new Robot();
+        keyInformation = new KeyInformation();
+
+        }
+        catch(AWTException exception){
+            System.out.println(exception.toString());
+        }
     }
 
     public static void type_sentence(String sentence, int wpm, int accuracy) throws InterruptedException {
-        int delay_ms = (int) (1 / ((4.2 * wpm) / 60.0) * 1000);
+        int delay_ms = (int) (1 / ((4.2 * wpm) / 30.0) * 1000);
         String[] words = sentence.split(" ");
 
         for (String word : words) {
+
             boolean stuck = getStuck(word, accuracy);
             boolean result = type(word, stuck, delay_ms, (int) (Math.random() * 5) + 1, accuracy);
             while(!result){
@@ -48,13 +56,14 @@ public class Typer {
         robot.keyRelease(KeyEvent.VK_SHIFT);
     }
     public static void ctrl_backspace(){
+        robot.keyPress(KeyEvent.VK_BACK_SPACE);
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_BACK_SPACE);
         robot.keyRelease(KeyEvent.VK_CONTROL);
     }
     
     public static int randomize_delay(int delay) {
-        return Math.max(4, delay + (int) (Math.random() * 100) - 50);
+        return Math.max(0, delay + (int) (Math.random() * 100) - 50);
     }
 
     public static boolean type(String word, boolean stuck, int delay, int tries, int accuracy)
