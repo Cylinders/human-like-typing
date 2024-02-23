@@ -95,6 +95,7 @@ public class App extends Frame implements ActionListener {
               }
             try{
                 Typer.type_sentence(input_data, wpm_number, error_number);
+                button.setLabel("Written");
             }
             catch(InterruptedException exception){
 
