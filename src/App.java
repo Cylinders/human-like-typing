@@ -98,7 +98,7 @@ public class App extends Frame implements ActionListener {
                 button.setLabel("Written");
             }
             catch(InterruptedException exception){
-
+                System.out.println("ERROR: EXITING"); 
             }
             
         }
