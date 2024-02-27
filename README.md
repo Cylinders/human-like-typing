@@ -24,7 +24,13 @@ Use the .py application if you have a ready to use python interpreter. This has 
 
 If you have a working JRE, JDK, or JVM, try to use the java application. Middle chance. 
 
-If you are running on a windows machine and CANNOT use the other two, then work off of the .exe file. (if it exists at all). This has the lowest chance of working. 
+If you are running on a windows machine and CANNOT use the other two, then work off of the .exe file. (if it exists at all). This has the lowest chance of working.  (NOT SET UP) 
+
+
+The JAR file should be perfectly fine as of 27 FEB 2024. Use that for any sort of testing. 
+
+
+The Python application is solely a CLI app, while the Java application has a minimal, albeit functional, GUI. 
 
 
 
