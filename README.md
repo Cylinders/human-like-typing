@@ -30,8 +30,7 @@ If you are running on a windows machine and CANNOT use the other two, then work 
 The JAR file should be perfectly fine as of 27 FEB 2024. Use that for any sort of testing. 
 
 
-The Python application is solely a CLI app, while the Java application has a minimal, albeit functional, GUI. 
-
+Both the .py and .jar versions have a functional, albeit minimal, GUI. 
 
 
 CONTRIBUTE: 
@@ -41,6 +40,11 @@ ASSUME ALL TRADITIONAL CONTRIBUTION PRACTICES ON GITHUB / OTHER OPENSOURCE PROJE
 FORK AND PULL REQUEST 
 
 DO NOT CHANGE MAIN, ONLY CHANGE DEVELOP
+
+
+Neither Ruthvik Venkatesan nor Vihas Veggalam are responsible for anyone who uses this application to circumnavigate tools that detect copy and pasting for the purpose of cheating on academic or professional assignments. This tool was developed with the sole purpose of developing a human-like typing bot that could ideally push the ability for machines to detect machine-run actions in contrast to human-run actions. 
+
+Please do not use this educational project to cheat on academic or professional assignments. It is not the intended purpose of our work. 
 
 
 
