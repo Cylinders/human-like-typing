@@ -1,5 +1,28 @@
 import java.awt.event.*;
 import java.awt.*;
+
+
+/*
+ * 
+ * 
+ * This simulator is intended for solely educational purposes. It was designed
+ * with the intent of simulating human-like typing to design an exploit for 
+ * biometric checking against computer inputs. 
+ * 
+ * For example, if users copy and paste things into Google Docs, extensions 
+ * exist which catch the quick copy and pastes and flag them to alert educators
+ * about teaching. 
+ * 
+ * However, in order to showcase a vulnerablity in this system, we designed an 
+ * exploit which takes advantage of the Python pyautogui module to emulate human-like
+ * typing and keyboard input. 
+ * 
+ * 
+ * PROTECTED BY GNU PUBLIC LICENSE. 
+ * 
+ */
+
+
 public class App extends Frame implements ActionListener {
     Frame frame;
     Button button;
