@@ -35,6 +35,7 @@ public class Typer {
 
     public static void type_sentence(String sentence, int wpm, int accuracy) throws InterruptedException {
         int delay_ms = (int) (1 / ((4.2 * wpm) / 30.0) * 1000);
+        delay_ms = Math.max(0, delay_ms);
         String[] words = sentence.split(" ");
 
         for (String word : words) {
@@ -69,10 +70,8 @@ public class Typer {
     public static boolean type(String word, boolean stuck, int delay, int tries, int accuracy)
             throws InterruptedException {
         boolean success = Math.random() > .20;
-        double deletion = 0.6;
-        if(success){
-            deletion = 0;
-        }
+        double deletion = success ? -0.1 : 0.6;
+        
         int stopping_point = (int) (Math.random() * word.length());
 
         for (int i = 0; i < word.length(); i++) {
@@ -121,7 +120,10 @@ public class Typer {
         if (word.length() < 6) {
             return false;
         }
-        return (int) (100 * Math.random() - (50 * accuracy)/300) > 50;
+        if (accuracy >= 100){
+            return false;
+        }
+        return (int) (100 * Math.random() - (100 * accuracy)/300) > 50;
 
     }
     public static void type_char(String character) {
@@ -234,6 +236,18 @@ public class Typer {
                 break;
             case "0":
                 robot.keyPress(48);
+                break;
+            case "\"":
+                robot.keyPress(KeyEvent.VK_SHIFT);
+                robot.keyPress(KeyEvent.VK_QUOTE);
+                robot.keyRelease(KeyEvent.VK_SHIFT);
+                break;
+            case "'":
+                robot.keyPress(KeyEvent.VK_QUOTE);
+                break;
+            case ",":
+                robot.keyPress(KeyEvent.VK_COMMA);
+                break;
             default:
                 unknown();
 
