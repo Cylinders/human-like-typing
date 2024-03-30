@@ -153,6 +153,99 @@ public class Typer {
             case ".":
                 robot.keyPress(KeyEvent.VK_PERIOD);
                 break;
+            case "/": 
+                robot.keyPress(KeyEvent.VK_SLASH); 
+                break;
+            case "\\": 
+                robot.keyPress(KeyEvent.VK_BACK_SLASH); 
+                break;
+            case "<": 
+                robot.keyPress(KeyEvent.VK_LESS); 
+                break;
+            case ">": 
+                robot.keyPress(KeyEvent.VK_GREATER); 
+                break;
+            case ",": 
+                robot.keyPress(KeyEvent.VK_COMMA); 
+                break;
+            case "?": 
+                robot.keyPress(KeyEvent.VK_SHIFT); 
+                robot.keyPress(KeyEvent.VK_SLASH); 
+                robot.keyRelease(KeyEvent.VK_SHIFT); 
+                break;
+            case "[": 
+                robot.keyPress(KeyEvent.VK_OPEN_BRACKET); 
+                break;
+            case "]": 
+                robot.keyPress(KeyEvent.VK_CLOSE_BRACKET); 
+                break;
+            case "{": 
+                robot.keyPress(KeyEvent.VK_BRACELEFT); 
+                break;
+            case "}": 
+                robot.keyPress(KeyEvent.VK_BRACERIGHT); 
+                break;
+            case "|": 
+                robot.keyPress(KeyEvent.VK_SHIFT); 
+                robot.keyPress(KeyEvent.VK_BACK_SLASH); 
+                robot.keyRelease(KeyEvent.VK_SHIFT); 
+                break;
+            case ":": 
+                robot.keyPress(KeyEvent.VK_COLON); 
+                break;
+            case ";": 
+                robot.keyPress(KeyEvent.VK_SEMICOLON); 
+                break;
+            case "'": 
+                robot.keyPress(KeyEvent.VK_QUOTE); 
+                break;
+            case "\"": 
+                robot.keyPress(KeyEvent.VK_QUOTEDBL); 
+                break;
+            case "+": 
+                robot.keyPress(KeyEvent.VK_PLUS); 
+                break;
+            case "=": 
+                robot.keyPress(KeyEvent.VK_EQUALS); 
+                break;
+            case "-": 
+                robot.keyPress(KeyEvent.VK_MINUS); 
+                break;
+            case "_": 
+                robot.keyPress(KeyEvent.VK_UNDERSCORE); 
+                break;
+            case "(": 
+                robot.keyPress(KeyEvent.VK_LEFT_PARENTHESIS); 
+                break;
+            case ")": 
+                robot.keyPress(KeyEvent.VK_RIGHT_PARENTHESIS); 
+                break;
+            case "*": 
+                robot.keyPress(KeyEvent.VK_ASTERISK); 
+                break;
+            case "&": 
+                robot.keyPress(KeyEvent.VK_AMPERSAND); 
+                break;
+            case "^": 
+                robot.keyPress(KeyEvent.VK_CIRCUMFLEX); 
+                break;
+            case "%": 
+                robot.keyPress(KeyEvent.VK_SHIFT); 
+                robot.keyPress(KeyEvent.VK_5); 
+                robot.keyRelease(KeyEvent.VK_SHIFT); 
+                break;
+            case "$": 
+                robot.keyPress(KeyEvent.VK_DOLLAR); 
+                break;
+            case "#": 
+                robot.keyPress(KeyEvent.VK_NUMBER_SIGN); 
+                break;
+            case "@": 
+                robot.keyPress(KeyEvent.VK_AT); 
+                break;
+            case "!": 
+                robot.keyPress(KeyEvent.VK_EXCLAMATION_MARK); 
+                break; 
             case " ":
                 robot.keyPress(KeyEvent.VK_SPACE);
                 break;
