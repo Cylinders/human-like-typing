@@ -199,9 +199,6 @@ public class Typer {
             case "'": 
                 robot.keyPress(KeyEvent.VK_QUOTE); 
                 break;
-            case "\"": 
-                robot.keyPress(KeyEvent.VK_QUOTEDBL); 
-                break;
             case "+": 
                 robot.keyPress(KeyEvent.VK_PLUS); 
                 break;
@@ -335,12 +332,7 @@ public class Typer {
                 robot.keyPress(KeyEvent.VK_QUOTE);
                 robot.keyRelease(KeyEvent.VK_SHIFT);
                 break;
-            case "'":
-                robot.keyPress(KeyEvent.VK_QUOTE);
-                break;
-            case ",":
-                robot.keyPress(KeyEvent.VK_COMMA);
-                break;
+        
             default:
                 unknown();
 
