@@ -38,11 +38,19 @@ public class Test {
         return y;
     }
     public static  void main(String[] args){
-        Test e = new Test(1, 100, -100);
-        System.out.println(e.getApproximation(2000));
-        System.out.println(e.getApproximation(2));
-        System.out.println(e.getApproximation(4.3));
-        System.out.println(e.getApproximation(4.435435434));
+        // Test e = new Test(1, 100, -100);
+        // System.out.println(e.getApproximation(2000));
+        // System.out.println(e.getApproximation(2));
+        // System.out.println(e.getApproximation(4.3));
+        // System.out.println(e.getApproximation(4.435435434));
+        int count = 0;
+        double rand = Math.random();
+        while (rand > 0){
+            count ++;
+            rand = Math.random();
+
+        }
+        System.out.println(count);
 
     }
 }

@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import java.awt.*;
+import javax.swing.*;
 
 
 /*
@@ -26,7 +27,9 @@ import java.awt.*;
 public class App extends Frame implements ActionListener {
     Frame frame;
     Button button;
-    TextField input_text, wpm, error;
+    JTextArea input_text;
+    JScrollPane scroll_input;
+    TextField wpm, error;
     Label wpmLabel, errLabel;
     Typer typer;
     public App(){
@@ -34,31 +37,37 @@ public class App extends Frame implements ActionListener {
         frame = new Frame("Typing");
     
         button = new Button("Type the text");
-        input_text = new TextField("Enter your text here.");
+        input_text = new JTextArea("Enter your text here.");
+        input_text.setRows(10);
+        scroll_input = new JScrollPane(input_text);
+        input_text.setLineWrap(true);
+        input_text.setWrapStyleWord(true);
+
+
 
         wpm = new TextField("130");
         wpmLabel = new Label("WPM: ");
         error = new TextField("92");
         errLabel = new Label("Accuracy (1-100): ");
 
-        wpm.setBounds(275,75,100,20);
-        wpmLabel.setBounds(275, 50, 100, 20);
-        error.setBounds(275, 125, 100, 20);
-        errLabel.setBounds(275, 100, 100,20);
+        wpm.setBounds(575,75,100,20);
+        wpmLabel.setBounds(575, 50, 100, 20);
+        error.setBounds(575, 125, 100, 20);
+        errLabel.setBounds(575, 100, 100,20);
 
         
         frame.add(wpm);
         frame.add(wpmLabel);
         frame.add(error);
         frame.add(errLabel);
-        input_text.setBounds(50,50,200,200);
+        scroll_input.setBounds(50,50,400,200);
 
-        frame.add(input_text);
+        frame.add(scroll_input);
         
-        button.setBounds(110,265,80,20);
+        button.setBounds(510,265,80,20);
         frame.add(button);
         button.addActionListener(this);
-        frame.setSize(500,300);
+        frame.setSize(700,300);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.addWindowListener(new WindowAdapter() {

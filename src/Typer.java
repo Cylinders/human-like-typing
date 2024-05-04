@@ -150,6 +150,9 @@ public class Typer {
         }
         character = character.toLowerCase();
         switch (character) {
+            case "\n":
+                robot.keyPress(KeyEvent.VK_ENTER);
+                break;
             case ".":
                 robot.keyPress(KeyEvent.VK_PERIOD);
                 break;
