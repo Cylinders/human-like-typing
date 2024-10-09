@@ -38,9 +38,9 @@ public class KeyInformation {
         error_keys.put("x", new String[]{"z","c"});
         error_keys.put("c", new String[]{"d","v"});
         error_keys.put("v", new String[]{"f","b", "c"});
-        error_keys.put("b", new String[]{"n", " "});
-        error_keys.put("n", new String[]{" ", "m"});
-        error_keys.put("m", new String[]{"n", " "});
+        error_keys.put("b", new String[]{"n"});
+        error_keys.put("n", new String[]{"m"});
+        error_keys.put("m", new String[]{"n"});
         error_keys.put(",", new String[]{"l"});
         error_keys.put(".", new String[]{});
         error_keys.put(";", new String[]{"l"});
