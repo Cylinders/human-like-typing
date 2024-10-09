@@ -1,15 +1,21 @@
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Typer {
     static Robot robot;
     static KeyInformation keyInformation;
-
+    public static boolean isPunctuation(String s) {
+        return s.matches("\\p{Punct}");
+    }
     public static void main(String[] args) throws IOException,
             AWTException, InterruptedException {
-    
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -22,13 +28,13 @@ public class Typer {
         String sentence = "As an AI language model, I don't have personal opinions or thoughts";
         type_sentence(sentence, 120, 92);
     }
-    public Typer() {
-        try{
-        robot = new Robot();
-        keyInformation = new KeyInformation();
 
-        }
-        catch(AWTException exception){
+    public Typer() {
+        try {
+            robot = new Robot();
+            keyInformation = new KeyInformation();
+
+        } catch (AWTException exception) {
             System.out.println(exception.toString());
         }
     }
@@ -42,27 +48,38 @@ public class Typer {
 
             boolean stuck = getStuck(word, accuracy);
             boolean result = type(word, stuck, delay_ms, (int) (Math.random() * 5) + 1, accuracy);
-            while(!result){
+            while (!result) {
                 ctrl_backspace();
+                Thread.sleep(50);
                 result = type(word, stuck, delay_ms, (int) (Math.random() * 5) + 1, accuracy);
+
+            }
+            if (isPunctuation(word.substring(word.length() - 2, word.length() - 1))) {
+                Thread.sleep(randomize_delay(300));;  // Longer pause for punctuation
             }
             type(" ", false, (int) (delay_ms * 1.5), 1, 101);
         }
         reset_monkey_type();
-       
+
     }
-    public static void reset_monkey_type(){
+
+    public static void reset_monkey_type() {
         robot.keyPress(KeyEvent.VK_SHIFT);
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_SHIFT);
     }
-    public static void ctrl_backspace(){
-        robot.keyPress(KeyEvent.VK_BACK_SPACE);
+
+    public static void ctrl_backspace() {
         robot.keyPress(KeyEvent.VK_CONTROL);
+
+        // Press and release BACKSPACE
         robot.keyPress(KeyEvent.VK_BACK_SPACE);
+        robot.keyRelease(KeyEvent.VK_BACK_SPACE);
+
+        // Release CTRL
         robot.keyRelease(KeyEvent.VK_CONTROL);
     }
-    
+
     public static int randomize_delay(int delay) {
         return Math.max(0, delay + (int) (Math.random() * 100) - 50);
     }
@@ -71,38 +88,38 @@ public class Typer {
             throws InterruptedException {
         boolean success = Math.random() > .20;
         double deletion = success ? -0.1 : 0.6;
-        
+
         int stopping_point = (int) (Math.random() * word.length());
 
         for (int i = 0; i < word.length(); i++) {
-                if (i != stopping_point || !stuck) {
+            if (i != stopping_point || !stuck) {
 
-                    if (Math.random() > accuracy / 100.0) {
-                        type_char(get_error_key(word.substring(i, i + 1)));
-                        Thread.sleep(randomize_delay(delay));
-                        if(Math.random() > deletion){
-                            type_char("del");
-                            Thread.sleep(randomize_delay(delay * 2));
-                        }
+                if (Math.random() > accuracy / 100.0) {
+                    type_char(get_error_key(word.substring(i, i + 1)));
+                    Thread.sleep(randomize_delay(delay));
+                    if (Math.random() > deletion) {
+                        type_char("del");
+                        Thread.sleep(randomize_delay(delay * 2));
+                    }
 
-                    }
-                    type_char(word.substring(i, i + 1));
-                    Thread.sleep(delay);
-                } else if (i == stopping_point) {
-                    for (int j = 0; j < tries; j++) {
-                        type_char(get_error_key(word.substring(i, i + 1)));
-                        Thread.sleep(randomize_delay(delay));
-                    }
-                    for (int j = 0; j < tries; j++) {
-                        if(Math.random() > deletion){
-                            type_char("del");
-                            Thread.sleep(randomize_delay(delay * 2));
-                        }
-                    } 
-                    type_char(word.substring(i, i + 1));
+                }
+                type_char(word.substring(i, i + 1));
+                Thread.sleep(delay);
+            } else if (i == stopping_point) {
+                for (int j = 0; j < tries; j++) {
+                    type_char(get_error_key(word.substring(i, i + 1)));
                     Thread.sleep(randomize_delay(delay));
                 }
-                
+                for (int j = 0; j < tries; j++) {
+                    if (Math.random() > deletion) {
+                        type_char("del");
+                        Thread.sleep(randomize_delay(delay * 2));
+                    }
+                }
+                type_char(word.substring(i, i + 1));
+                Thread.sleep(randomize_delay(delay));
+            }
+
         }
         return success;
     }
@@ -116,17 +133,25 @@ public class Typer {
         return options[index];
 
     }
+
     public static boolean getStuck(String word, int accuracy) {
         if (word.length() < 6) {
             return false;
         }
-        if (accuracy >= 100){
+        if (accuracy >= 100) {
             return false;
         }
-        return (int) (100 * Math.random() - (100 * accuracy)/300) > 50;
+        return (int) (100 * Math.random() - (100 * accuracy) / 300) > 50;
 
     }
-    public static void type_char(String character) {
+
+    public static void shift(int character) {
+        robot.keyPress(KeyEvent.VK_SHIFT);
+        robot.keyPress(character);
+        robot.keyRelease(KeyEvent.VK_SHIFT);
+    }
+
+    public static void type_char(String character) throws InterruptedException {
         if (character.equals("del")) {
             robot.keyPress(KeyEvent.VK_BACK_SPACE);
             return;
@@ -148,7 +173,12 @@ public class Typer {
         if (uppercase) {
             robot.keyPress(KeyEvent.VK_SHIFT);
         }
-        character = character.toLowerCase();
+        try {
+            character = character.toLowerCase();
+        } catch (Exception e) {
+
+        }
+        
         switch (character) {
             case "\n":
                 robot.keyPress(KeyEvent.VK_ENTER);
@@ -156,96 +186,91 @@ public class Typer {
             case ".":
                 robot.keyPress(KeyEvent.VK_PERIOD);
                 break;
-            case "/": 
-                robot.keyPress(KeyEvent.VK_SLASH); 
+            case "/":
+                robot.keyPress(KeyEvent.VK_SLASH);
                 break;
-            case "\\": 
-                robot.keyPress(KeyEvent.VK_BACK_SLASH); 
+            case "\\":
+                robot.keyPress(KeyEvent.VK_BACK_SLASH);
                 break;
-            case "<": 
-                robot.keyPress(KeyEvent.VK_LESS); 
+            case "<":
+                robot.keyPress(KeyEvent.VK_LESS);
                 break;
-            case ">": 
-                robot.keyPress(KeyEvent.VK_GREATER); 
+            case ">":
+                robot.keyPress(KeyEvent.VK_GREATER);
                 break;
-            case ",": 
-                robot.keyPress(KeyEvent.VK_COMMA); 
+            case ",":
+                robot.keyPress(KeyEvent.VK_COMMA);
                 break;
-            case "?": 
-                robot.keyPress(KeyEvent.VK_SHIFT); 
-                robot.keyPress(KeyEvent.VK_SLASH); 
-                robot.keyRelease(KeyEvent.VK_SHIFT); 
+            case "?":
+                shift(KeyEvent.VK_SLASH);
                 break;
-            case "[": 
-                robot.keyPress(KeyEvent.VK_OPEN_BRACKET); 
+            case "[":
+                robot.keyPress(KeyEvent.VK_OPEN_BRACKET);
                 break;
-            case "]": 
-                robot.keyPress(KeyEvent.VK_CLOSE_BRACKET); 
+            case "]":
+                robot.keyPress(KeyEvent.VK_CLOSE_BRACKET);
                 break;
-            case "{": 
-                robot.keyPress(KeyEvent.VK_BRACELEFT); 
+            case "{":
+                robot.keyPress(KeyEvent.VK_BRACELEFT);
                 break;
-            case "}": 
-                robot.keyPress(KeyEvent.VK_BRACERIGHT); 
+            case "}":
+                robot.keyPress(KeyEvent.VK_BRACERIGHT);
                 break;
-            case "|": 
-                robot.keyPress(KeyEvent.VK_SHIFT); 
-                robot.keyPress(KeyEvent.VK_BACK_SLASH); 
-                robot.keyRelease(KeyEvent.VK_SHIFT); 
+            case "|":
+                shift(KeyEvent.VK_BACK_SLASH);
                 break;
-            case ":": 
-                robot.keyPress(KeyEvent.VK_COLON); 
+            case ":":
+                shift(KeyEvent.VK_SEMICOLON);
                 break;
-            case ";": 
-                robot.keyPress(KeyEvent.VK_SEMICOLON); 
+            case ";":
+                robot.keyPress(KeyEvent.VK_SEMICOLON);
                 break;
-            case "'": 
-                robot.keyPress(KeyEvent.VK_QUOTE); 
+            case "'":
+                robot.keyPress(KeyEvent.VK_QUOTE);
                 break;
-            case "+": 
-                robot.keyPress(KeyEvent.VK_PLUS); 
+            case "+":
+                robot.keyPress(KeyEvent.VK_PLUS);
                 break;
-            case "=": 
-                robot.keyPress(KeyEvent.VK_EQUALS); 
+            case "=":
+                robot.keyPress(KeyEvent.VK_EQUALS);
                 break;
-            case "-": 
-                robot.keyPress(KeyEvent.VK_MINUS); 
+            case "-":
+                robot.keyPress(KeyEvent.VK_MINUS);
                 break;
-            case "_": 
-                robot.keyPress(KeyEvent.VK_UNDERSCORE); 
+            case "_":
+                robot.keyPress(KeyEvent.VK_UNDERSCORE);
                 break;
-            case "(": 
-                robot.keyPress(KeyEvent.VK_LEFT_PARENTHESIS); 
+            case "(":
+                shift(KeyEvent.VK_9);
+
                 break;
-            case ")": 
-                robot.keyPress(KeyEvent.VK_RIGHT_PARENTHESIS); 
+            case ")":
+                shift(KeyEvent.VK_0);
                 break;
-            case "*": 
-                robot.keyPress(KeyEvent.VK_ASTERISK); 
+            case "*":
+                shift(KeyEvent.VK_8);
                 break;
-            case "&": 
-                robot.keyPress(KeyEvent.VK_AMPERSAND); 
+            case "&":
+                shift(KeyEvent.VK_7);
                 break;
-            case "^": 
-                robot.keyPress(KeyEvent.VK_CIRCUMFLEX); 
+            case "^":
+                shift(KeyEvent.VK_6);
                 break;
-            case "%": 
-                robot.keyPress(KeyEvent.VK_SHIFT); 
-                robot.keyPress(KeyEvent.VK_5); 
-                robot.keyRelease(KeyEvent.VK_SHIFT); 
+            case "%":
+                shift(KeyEvent.VK_5);
                 break;
-            case "$": 
-                robot.keyPress(KeyEvent.VK_DOLLAR); 
+            case "$":
+                shift(KeyEvent.VK_4);
                 break;
-            case "#": 
-                robot.keyPress(KeyEvent.VK_NUMBER_SIGN); 
+            case "#":
+                shift(KeyEvent.VK_3);
                 break;
-            case "@": 
-                robot.keyPress(KeyEvent.VK_AT); 
+            case "@":
+                shift(KeyEvent.VK_2);
                 break;
-            case "!": 
-                robot.keyPress(KeyEvent.VK_EXCLAMATION_MARK); 
-                break; 
+            case "!":
+                shift(KeyEvent.VK_1);
+                break;
             case " ":
                 robot.keyPress(KeyEvent.VK_SPACE);
                 break;
@@ -331,11 +356,9 @@ public class Typer {
                 robot.keyPress(48);
                 break;
             case "\"":
-                robot.keyPress(KeyEvent.VK_SHIFT);
-                robot.keyPress(KeyEvent.VK_QUOTE);
-                robot.keyRelease(KeyEvent.VK_SHIFT);
+                shift(KeyEvent.VK_QUOTE);
                 break;
-        
+
             default:
                 unknown();
 
@@ -343,20 +366,23 @@ public class Typer {
         if (uppercase) {
             robot.keyRelease(KeyEvent.VK_SHIFT);
         }
+        
     }
-    public static void unknown(){
-        robot.keyPress( KeyEvent.VK_ALT );
 
+    public static void unknown() {
+        robot.keyPress(KeyEvent.VK_SPACE);
+        robot.keyPress(KeyEvent.VK_SPACE);
+        // robot.keyPress(KeyEvent.VK_ALT);
 
-        robot.keyPress( KeyEvent.VK_NUMPAD2 );
-        robot.keyRelease( KeyEvent.VK_NUMPAD2 );
-        robot.keyPress( KeyEvent.VK_NUMPAD5 );
-        robot.keyRelease( KeyEvent.VK_NUMPAD5 );
-        robot.keyPress( KeyEvent.VK_NUMPAD5 );
-        robot.keyRelease( KeyEvent.VK_NUMPAD5 );
-        robot.keyPress( KeyEvent.VK_NUMPAD8 );
-        robot.keyRelease( KeyEvent.VK_NUMPAD8 );
-    
-        robot.keyRelease( KeyEvent.VK_ALT );
+        // robot.keyPress(KeyEvent.VK_NUMPAD2);
+        // robot.keyRelease(KeyEvent.VK_NUMPAD2);
+        // robot.keyPress(KeyEvent.VK_NUMPAD5);
+        // robot.keyRelease(KeyEvent.VK_NUMPAD5);
+        // robot.keyPress(KeyEvent.VK_NUMPAD5);
+        // robot.keyRelease(KeyEvent.VK_NUMPAD5);
+        // robot.keyPress(KeyEvent.VK_NUMPAD8);
+        // robot.keyRelease(KeyEvent.VK_NUMPAD8);
+
+        // robot.keyRelease(KeyEvent.VK_ALT);
     }
 }
