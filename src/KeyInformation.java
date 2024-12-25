@@ -42,7 +42,7 @@ public class KeyInformation {
         error_keys.put("n", new String[]{"m"});
         error_keys.put("m", new String[]{"n"});
         error_keys.put(",", new String[]{"l"});
-        error_keys.put(".", new String[]{});
+        error_keys.put(".", new String[]{","});
         error_keys.put(";", new String[]{"l"});
         error_keys.put("'", new String[]{"'"});
         // error_keys.put("[", new String[]{});
@@ -50,6 +50,7 @@ public class KeyInformation {
         // error_keys.put("}", new String[]{});
     }
     public static String[] getKey(String key){
+       
         if(!error_keys.containsKey(key)){
             return new String[]{key};
         }

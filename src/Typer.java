@@ -1,11 +1,7 @@
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Typer {
     static Robot robot;
@@ -54,8 +50,8 @@ public class Typer {
                 result = type(word, stuck, delay_ms, (int) (Math.random() * 5) + 1, accuracy);
 
             }
-            if (isPunctuation(word.substring(word.length() - 2, word.length() - 1))) {
-                Thread.sleep(randomize_delay(300));;  // Longer pause for punctuation
+            if (isPunctuation(word.substring(word.length() - 1))) {
+                Thread.sleep(randomize_delay(300)); // Longer pause for punctuation
             }
             type(" ", false, (int) (delay_ms * 1.5), 1, 101);
         }
